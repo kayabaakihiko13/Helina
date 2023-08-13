@@ -1,2 +1,1 @@
-# Hela
-simple math package
+![hela_image_banner](.github/hela.png)
