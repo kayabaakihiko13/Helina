@@ -13,10 +13,12 @@ repos:
     hooks:
       - id: black
 
-  - repo: local
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.4.1
     hooks:
-      - id: run-python-script
-        name: run testing hela
-        entry: python hela_testing/main_test.py
-        language: python
-        pass_filename: false
+      - id: mypy
+        args:
+          - --ignore-missing-imports
+          - --install-types
+          - --non-interactive
+        additional_dependencies: [types-requests]

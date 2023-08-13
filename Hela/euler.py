@@ -1,5 +1,8 @@
+from typing import Any
+
+
 class Euler:
-    def totient(self, number: int) -> int:
+    def totient(self, number: int) -> list[Any]:
         """
         calculate the totient function for a given number
 
