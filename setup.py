@@ -6,5 +6,5 @@ setup(
     description="Curated list math",
     author="arfy slowy",
     packages=["Hela"],
-    python_requires=">=3.7"
+    python_requires=">=3.7",
 )

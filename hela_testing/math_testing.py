@@ -31,4 +31,3 @@ class MathTest(unittest.TestCase):
         result = self.math_obj.avg_mean([3, 6, 9, 12, 15, 18, 21])
         expected = 12.0
         self.assertEqual(result, expected)
-    
