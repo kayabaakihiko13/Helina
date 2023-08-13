@@ -18,4 +18,4 @@ jobs:
       - name: testing Hela
         shell: sh
         run: |
-          echo $PYTHONPATH
+          export $PYTHONPATH="$PYTHONPATH:($pwd)"
