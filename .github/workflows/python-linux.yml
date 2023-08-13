@@ -17,5 +17,4 @@ jobs:
 
       - name: testing Hela
         run: |
-          export $PYTHONPATH="/usr/bin/python:$(PWD)"
           python hela_testing/main_test.py
