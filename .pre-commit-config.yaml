@@ -22,3 +22,4 @@ repos:
           - --install-types
           - --non-interactive
         additional_dependencies: [types-requests]
+        exclude: 'hela_testing'

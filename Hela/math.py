@@ -1,152 +1,145 @@
-from Hela.constant import PI
+import math
+import numpy as np
 
 
-class Math:
+class GeometricMean:
     """
-    Curated list math
+    Calculate the largest eigenvalue and corresponding eigenvector of matrix `input_matrix`
+    given a random vector in the same space.
+
+    Args:
+        input_matrix (np.ndarray): The square matrix for which to calculate the largest eigenvalue and eigenvector.
+        vector (np.ndarray): The initial vector used in the Power Iteration algorithm.
+
+    Returns:
+        tuple[float, np.ndarray]: The calculated largest eigenvalue and the corresponding eigenvector.
+
+    Raises:
+        AssertionError: If the dimensions of the input matrix and vector do not match.
+        ValueError: If the matrix or vector is complex and not Hermitian (not equal to its conjugate transpose).
+
+    Example:
+        >>> input_matrix = np.array([[2, 1], [1, 3]])
+        >>> vector = np.array([1, 0])
+        >>> power_iteration = PowerIteration()
+        >>> eigenvalue, eigenvector = power_iteration(input_matrix, vector)
     """
 
-    def factorial(self, n: int) -> int:
+    def __init__(self):
+        pass
+
+    def __call__(self, series: list) -> float:
         """
-        checking factorial of number
+        Calculate the geometric mean of a list of numbers.
+
+        The geometric mean of a set of numbers is calculated by multiplying all the numbers in the input list
+        and then taking the n-th root of the product, where n is the number of elements in the list.
 
         Args:
-            n (int): number of given
-
-        Return:
-            factorial of numbers
-
-        Example:
-        >>> Math().factorial(5)
-        120
-        """
-        if not isinstance(n, int):
-            raise ValueError("factorial(): only accept integral values")
-        if n < 0:
-            raise ValueError("factorial(): only accept integral values")
-        return 1 if n in {0, 1} else n * self.factorial(n - 1)
-
-    def radians(self, degree: float) -> float:
-        """
-        convert angle from degree to radians
-
-        Args:
-            degree (float): angle in degree
+            series (list or tuple): List of numbers for which to calculate the geometric mean.
 
         Returns:
-            (float): angle in radians
+            float: Geometric mean of the input list.
 
         Example:
-        >>> Math().radians(90)
-        1.5707963267948966
-        """
-        return degree / (180 / PI)
+            >>> geometric_mean = GeometricMean()
+            >>> geometric_mean([2, 4, 8])
+            4.0
+            >>> geometric_mean([1, 2, 3, 4, 5])
+            2.605171084697352
+            >>> geometric_mean([10, 20, 30, 40, 50])
+            27.866004174074643
 
-    def avg_mean(self, nums: list) -> float:
+        Raises:
+            ValueError: If the input series is not a valid list or tuple.
+            ValueError: If the input list is empty.
         """
-        find mean of list of numbers
+        if not isinstance(series, (list, tuple)):
+            raise ValueError(
+                "GeometricMean(): input series not valid - valid series - [2, 4, 8]"
+            )
+        if len(series) == 0:
+            raise ValueError("GeometricMean(): input list must be a non empty list")
+        answer = 1
+        for value in series:
+            answer *= value
+        return math.pow(answer, 1 / len(series))
+
+
+class PowerIteration:
+    """
+    Calculate the largest eigenvalue and corresponding eigenvector of a given matrix using the Power Iteration method.
+
+    This class implements the Power Iteration algorithm to find the largest eigenvalue and its corresponding eigenvector
+    of a given square matrix. The algorithm iteratively applies matrix-vector multiplications and normalization to converge
+    towards the dominant eigenvalue and eigenvector.
+
+    Args:
+        error_total (float, optional): The desired tolerance for convergence. Defaults to 1e-12.
+        max_iteration (int, optional): The maximum number of iterations before termination. Defaults to 100.
+
+    Methods:
+        __call__(self, input_matrix: np.ndarray, vector: np.ndarray) -> tuple[float, np.ndarray]:
+            Calculate the largest eigenvalue and corresponding eigenvector using Power Iteration.
+
+    Example:
+        >>> input_matrix = np.array([[2, 1], [1, 3]])
+        >>> vector = np.array([1, 0])
+        >>> power_iteration = PowerIteration()
+        >>> eigenvalue, eigenvector = power_iteration(input_matrix, vector)
+    """
+
+    def __init__(self, error_total: float = 1e-12, max_iteration: int = 100):
+        self.error_total = error_total
+        self.max_iteration = max_iteration
+
+    def __call__(
+        self, input_matrix: np.ndarray, vector: np.ndarray
+    ) -> tuple[float, np.ndarray]:
+        """
+        Calculate the largest eigenvalue and corresponding eigenvector of matrix `input_matrix`
+        given a random vector in the same space.
 
         Args:
-            nums (list): list of numbers
-        Returns:
-            (float): mean of list of numbers
-
-        Example:
-        >>> Math().avg_mean([1, 2, 3, 4, 5])
-        3.0
-        """
-        if not nums:
-            raise ValueError("mean(): list empty")
-        return sum(nums) / len(nums)
-
-    def sine(
-        self, angle_degree: float, accuracy: int = 18, rounded_value: int = 10
-    ) -> float:
-        """
-        sine function
-
-        Args:
-            angle_degree (float): angle in degree
-            accuracy (int, optional): number terms to calcylate the sine,
-                                      defaults to 18
-            rounded_value (int, optional): number of decimal places to round
-                                           the result, default 10.
+            input_matrix (np.ndarray): The square matrix for which to calculate the largest eigenvalue and eigenvector.
+            vector (np.ndarray): The initial vector used in the Power Iteration algorithm.
 
         Returns:
-            (float): sine value of angle in degree
+            tuple[float, np.ndarray]: The calculated largest eigenvalue and the corresponding eigenvector.
+
+        Raises:
+            AssertionError: If the dimensions of the input matrix and vector do not match.
+            ValueError: If the matrix or vector is complex and not Hermitian (not equal to its conjugate transpose).
 
         Example:
-        >>> sin(270.0)
-        -1.0
+            >>> input_matrix = np.array([[2, 1], [1, 3]])
+            >>> vector = np.array([1, 0])
+            >>> power_iteration = PowerIteration()
+            >>> eigenvalue, eigenvector = power_iteration(input_matrix, vector)
         """
-        angle_in_degree = angle_degree - ((angle_degree // 360.0) * 360.0)
-        angle_in_radians = self.radians(angle_in_degree)
-        result = angle_in_radians
-        a = 3
-        b = -1
-        for _ in range(accuracy):
-            result += (b * (angle_in_radians**a)) / self.factorial(a)
-            b = -b
-            a += 2
+        assert np.shape(input_matrix)[0] == np.shape(input_matrix)[1]
+        assert np.shape(input_matrix)[0] == np.shape(vector)[0]
+        assert np.iscomplexobj(input_matrix) == np.iscomplexobj(vector)
+        is_complex = np.iscomplexobj(input_matrix)
+        if is_complex:
+            assert np.array_equal(input_matrix, input_matrix.conj().T)
+        convergence = False
+        lambda_previous = 0
+        iterations = 0
+        error = 1e12
 
-        return round(result, rounded_value)
+        while not convergence:
+            w = np.dot(input_matrix, vector)
+            vector = w / np.linalg.norm(w)
+            vector_h = vector.conj().T if is_complex else vector.T
+            lambda_ = np.dot(vector_h, np.dot(input_matrix, vector))
+            error = np.abs(lambda_ - lambda_previous) / lambda_
+            iterations += 1
 
-    def cosine(
-        self, angle_degree: float, accuracy: int = 18, rounded_value: int = 10
-    ) -> float:
-        """Cosine Function
+            if error <= self.error_total or iterations >= self.max_iteration:
+                convergence = True
+            lambda_previous = lambda_
 
-        Args:
-            angle_degree (float): angle in degree
-            accuracy (int, optional): number terms to calcylate the cosine,
-                                      defaults to 18
-            rounded_value (int, optional): number of decimal places to
-                                           round the result, default 10.
-
-        Returns:
-            (float): sine value of angle in degree
-
-        Example:
-        >>> cosine(0)
-        1
-        """
-        angle_in_degree = angle_degree - ((angle_degree // 360.0) * 360.0)
-        angle_in_radians = self.radians(angle_in_degree)
-        result: float = 1.0
-        a: int = 2
-        b: int = -1
-        for _ in range(1, accuracy):
-            result += (b * (angle_in_radians**a)) / self.factorial(a)
-            b *= -1
-            a += 2
-        return round(result, rounded_value)
-
-    def exponential(
-        self, x: int | float, accuracy: int = 18, rounded_value: int = 10
-    ) -> float:
-        """Exponential Function
-
-        Args:
-            x (int | float): input value
-            accuracy (int, optional): number terms to calcylate
-                                      the exponential.Defaults to 18.
-            rounded_value (int, optional): number of decimal places to
-                                           round the result. Defaults to 10.
-
-        Returns:
-            float: _description_
-
-        Example:
-        >>> exponential(1)
-        2.7182818284
-        """
-        # to avoid negative number
-        if x < 0:
-            raise ValueError("Can't Allow Negativate Number.\n")
-
-        result: float = 0.0
-
-        for n in range(accuracy):
-            result += (x**n) / (self.factorial(n))
-
-        return round(result, rounded_value)
+        if is_complex:
+            lambda_ = np.real(lambda_)
+        return lambda_, vector

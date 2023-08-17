@@ -1,37 +1,19 @@
-from Hela.math import Math
+import numpy as np
+from Hela.math import PowerIteration, GeometricMean
 
 
-def finding_radians() -> None:
-    """
-    finding radians
-    """
-    hela = Math()
+def test_power_iteration() -> None:
+    input_matrix = np.array([[41, 4, 20], [4, 26, 30], [20, 30, 50]])
+    vector = np.array([41, 4, 20])
+    test = PowerIteration()
 
-    angle_in_radians: int = 90
-    print(f"radians in {angle_in_radians} is: {hela.radians(angle_in_radians)}")
+    print(test.__call__(input_matrix, vector))
 
 
-def mean_of_list_numbers() -> None:
-    """
-    finding mean of given number
-    """
-    hela = Math()
-
-    avg_mean_list: list = [1, 2, 3, 4, 5]
-    print(f"average mean of {avg_mean_list} is: {hela.avg_mean(avg_mean_list)}")
+def test_geometric_mean() -> None:
+    test = GeometricMean().__call__([2, 4, 8])
+    print(test)
 
 
-def finding_cosine() -> None:
-    """
-    finding cosine
-    """
-    hela = Math()
-    angle_in_radians: int = 0
-    print(
-        f"value cosine in {angle_in_radians} angle is {hela.cosine(angle_in_radians)}"
-    )
-
-
-finding_radians()
-mean_of_list_numbers()
-finding_cosine()
+test_geometric_mean()
+test_power_iteration()
