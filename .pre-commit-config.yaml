@@ -2,6 +2,7 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
+      - id: check-executables-have-shebangs
       - id: check-yaml
       - id: end-of-file-fixer
         types: [python]
@@ -23,3 +24,8 @@ repos:
           - --non-interactive
         additional_dependencies: [types-requests]
         exclude: 'hela_testing'
+
+  - repo: https://github.com/MarcoGorelli/auto-walrus
+    rev: v0.2.2
+    hooks:
+    -   id: auto-walrus
