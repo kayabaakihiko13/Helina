@@ -1,6 +1,10 @@
 import unittest
 
-from hela_testing.math_testing import TestGeometricMean, TestPowerIteration, TestHarmonic
+from hela_testing.math_testing import (
+    TestGeometricMean,
+    TestPowerIteration,
+    TestHarmonic,
+)
 
 if __name__ == "__main__":
     # Create instances of your test classes
