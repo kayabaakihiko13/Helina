@@ -1,6 +1,9 @@
 ![hela_image_banner](.github/hela.png)
 
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/slowy07/Hela/main.svg)](https://results.pre-commit.ci/latest/github/slowy07/Hela/main)<br/>
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/slowy07/Hela/main.svg)](https://results.pre-commit.ci/latest/github/slowy07/Hela/main)
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/slowy07/Hela/pythontest-linux.yml?style=flat-square&logo=python&logoColor=blue&label=Build%20(Linux))
+<br/>
+
 Hela is curated packaged for math computational. it provides a number functions for performing mathematical calculations, such as
 factorial radians, mean, etc. the function in hela are carefully tested to ensure accuracy and correctness. Hela is great module for who
 anyone who need to perform mathematical calculations with python.
