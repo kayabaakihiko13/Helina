@@ -4,6 +4,7 @@ from hela_testing.math_testing import (
     TestGeometricMean,
     TestPowerIteration,
     TestHarmonic,
+    TestFastFourierTransforms,
 )
 
 if __name__ == "__main__":
@@ -16,9 +17,18 @@ if __name__ == "__main__":
     )
     harmonic_mean_test = unittest.TestLoader().loadTestsFromTestCase(TestHarmonic)
 
+    fft_test_suite = unittest.TestLoader().loadTestsFromTestCase(
+        TestFastFourierTransforms
+    )
+
     # Combine the test suites
     all_tests = unittest.TestSuite(
-        [power_iteration_suite, geometric_mean_suite, harmonic_mean_test]
+        [
+            power_iteration_suite,
+            geometric_mean_suite,
+            harmonic_mean_test,
+            fft_test_suite,
+        ]
     )
 
     # Run the tests

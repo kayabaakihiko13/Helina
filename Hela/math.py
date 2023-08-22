@@ -337,16 +337,15 @@ class FastFourierTransforms:
         of a function into a same-length sequence of equaly-
         spaced sample of Fast Fouruier Transforms
         """
-        if vector.ndim == 1 or len(vector) == 1:
-            return vector
         n = len(vector)
-        x_even = self.discrectefft(vector[::2])
+        if n <= 1:
+            return vector
+        x_even = self.discrectefft(vector[0::2])
         x_odd = self.discrectefft(vector[1::2])
         factor = np.exp(-2j * np.pi * np.arange(n) / n)
-        X = np.concatenate(
+        return np.concatenate(
             [
-                x_even + factor[: int(n / 2)] * x_odd,
-                x_even + factor[int(n / 2) :] * x_odd,
+                x_even + factor[: n // 2] * x_odd,
+                x_even + factor[n // 2 :] * x_odd,
             ]
         )
-        return X
