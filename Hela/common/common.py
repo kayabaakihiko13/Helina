@@ -1,5 +1,6 @@
 from __future__ import annotations
 import numpy as np
+import random
 import math
 from typing import Any, Union
 
@@ -178,8 +179,8 @@ class Matrix:
         >>> Matrix.minor(matrix, 1, 1)
         [[1, 3], [7, 9]]
         """
-        minor = matrix[:row] + matrix[row + 1 :]
-        return [row[:column] + row[column + 1 :] for row in minor]
+        minor = matrix[:row] + matrix[row + 1:]
+        return [row[:column] + row[column + 1:] for row in minor]
 
     @staticmethod
     def determinant(matrix: list[list[int]]) -> Any:
@@ -408,7 +409,7 @@ class SignalAnalysis:
         )
         for i in range(embedding_dimension):
             embedded_series[i] = time_series[
-                i * delay : i * delay + embedded_series.shape[1]
+                i * delay: i * delay + embedded_series.shape[1]
             ]
         return embedded_series.T
 
@@ -423,7 +424,7 @@ class Sigmoid:
         and then 1 / (1 + exp(-x)). after through sigmoid, the element of the
         vector mostly 0 between 1. or 1 between -1.
 
-        Parameters:
+        Args:
             vector (list): A list of numerical values for sigmoid calculation
 
         Example
@@ -469,7 +470,7 @@ class Gaussian:
         gaussian function at a specified input, based on given mean and
         standard deviation
 
-        Parameters:
+        Args:
             x (float): the input value at which to calculate the gaussian function
             mu (float): the mean (average) of the gaussian distribution
             sigma (float): the standard deviation of the gaussian distribution
@@ -506,3 +507,132 @@ class Gaussian:
             (str): a string representation of the gaussian instance
         """
         return f"Gaussian(x={self.x}, mu={self.mu}, sigma={self.sigma})"
+
+
+class ContinousDistribution:
+    @staticmethod
+    def continous_uniform_pdf(x: float, a: float, b: float) -> float:
+        """
+        calculate the probability density function (PDF) of the continous
+        distribution
+
+        Args:
+            x (float): the input value at which to calculate the PDF
+            a (float): the lower bound of the uniform distribution
+            b (float): the upper bound of the uniform distribution
+
+        Returns:
+            (float): the value of the PDF at the given input
+
+        Example
+        >>> pdf = ContinuousDistribution.continous_uniform_pdf(3.0, 2.0, 5.0)
+        >>> print(f"PDF value at x = 3.0: {pdf:.6f}")
+        PDF value at x = 3.0: 0.333333
+        """
+        if x < a or x > b:
+            return 0.0
+        return 1 / (b - a)
+
+    @staticmethod
+    def continous_uniform_cdf(x: float, a: float, b: float) -> float:
+        """
+        calculate the cumulative distribution function (CDF) of the continous
+        distribution
+
+        Args:
+            x (float): the input value at which to calculate the CDF
+            a (float): the lower bound of the uniform distribution
+            b (float): the upper bound of the uniform distribution
+
+        Returns:
+            (float): the value of the CDDF the given output
+
+        Example
+        >>> cdf = ContinuousDistribution.continuous_uniform_cdf(3.0, 2.0, 5.0)
+        >>> print(f"CDF value at x = 3.0: {cdf:.6f}")
+        CDF value at x = 3.0: 0.333333
+        """
+        if x < a:
+            return 0.0
+        elif x >= b:
+            return 1.0
+        return (x - a) / (b - a)
+
+    @staticmethod
+    def generate_random_sample(a: float, b: float) -> float:
+        """
+        generate random sample from the continous uniform distribution
+
+        Args:
+            a (float): the lower bound of the uniform distribution
+            b (float): the upper bound of the uniform distribution
+
+        Returns:
+            (float): random sample from the uniform distribution
+
+        Example
+        >>> sample = ContinuousDistribution.generate_random_sample(2.0, 5.0)
+        >>> print(f"Generated random sample: {sample:.6f}")
+        Generated random sample: 3.491482
+        """
+        return random.uniform(a, b)
+
+
+class BetaDistribution:
+    @staticmethod
+    def beta_pdf(x: float, alpha: float, beta: float) -> float:
+        """
+        calculate the probability density function (PDF) of the beta
+        distribution
+
+        Args:
+            x (float): the input value at which calculate the PDF
+            alpha (float): the shape parameter alpha of the beta distribution
+            beta (float): the shape parameter of the beta distribution
+
+        Returns:
+            (float): the value of the PDF at the given input
+
+        Example
+        >>> pdf = beta_pdf(0.3, alpha=2, beta=5)
+        >>> print(f"PDF value at x = 0.3: {pdf:.6f}")
+        PDF value at x = 0.3: 1.170225
+        """
+        if x < 0 or x > 1:
+            return 0.0
+        coefficient = math.gamma(alpha + beta) / (math.gamma(alpha) * math.gamma(beta))
+        pdf_value = coefficient * (x ** (alpha - 1)) * ((1 - x) ** (beta - 1))
+        return pdf_value
+
+    @staticmethod
+    def beta_cdf(x: float, alpha: float, beta: float) -> float:
+        """
+        calculate the cumulative distribution function (CDF) of beta distribution
+
+        Args:
+            x (float): the input value at which to calculate the CDF
+            alpha (float): the shape parameter alpha of the beta distribution
+            beta (float): the shape parameter beta of the beta distribution
+
+        Returns:
+            (float): the value of the CDF at the given input
+
+        Example
+        >>> cdf = beta_cdf(0.3, alpha=2, beta=5)
+        >>> print(f"CDF value at x = 0.3: {cdf:.6f}")
+        CDF value at x = 0.3: 0.462543
+        """
+
+        def frange(start, stop, step):
+            while start < stop:
+                yield start
+                start += step
+
+        if x < 0:
+            return 0.0
+        elif x >= 1:
+            return 1.0
+        return (
+            sum(BetaDistribution.beta_pdf(t, alpha, beta) for t in frange(0, x, 0.001))
+            * 0.001
+        )

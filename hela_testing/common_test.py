@@ -1,6 +1,11 @@
 import unittest
 import math
-from Hela.common.common import Sigmoid, Gaussian
+from Hela.common.common import (
+    Sigmoid,
+    Gaussian,
+    ContinousDistribution,
+    BetaDistribution,
+)
 
 
 class SigmoidTest(unittest.TestCase):
@@ -26,3 +31,27 @@ class GaussianTest(unittest.TestCase):
         gaussian_calc = Gaussian(x=2.0, mu=1.0, sigma=0.5)
         representation = repr(gaussian_calc)
         self.assertEqual(representation, "Gaussian(x=2.0, mu=1.0, sigma=0.5)")
+
+
+class TestContinuousDistribution(unittest.TestCase):
+    def test_continous_uniform_pdf(self):
+        pdf = ContinousDistribution.continous_uniform_pdf(3.0, 2.0, 5.0)
+        self.assertAlmostEqual(pdf, 0.333333, places=6)
+
+    def test_continous_uniform_cdf(self):
+        cdf = ContinousDistribution.continous_uniform_pdf(3.0, 2.0, 5.0)
+        self.assertAlmostEqual(cdf, 0.333333, places=6)
+
+    def test_generate_random(self):
+        sample = ContinousDistribution.generate_random_sample(2.0, 5.0)
+        self.assertTrue(2.0 <= sample <= 5.0)
+
+
+class TestBetaDistribution(unittest.TestCase):
+    def test_beta_pdf(self):
+        pdf = BetaDistribution.beta_pdf(0.3, alpha=2, beta=5)
+        self.assertAlmostEqual(pdf, 2.1608999999999994, places=6)
+
+    def test_beta_cdf(self):
+        cdf = BetaDistribution.beta_cdf(0.3, alpha=2, beta=5)
+        self.assertAlmostEqual(cdf, 0.5787416212509751, places=6)

@@ -7,7 +7,12 @@ from hela_testing.math_testing import (
     TestFastFourierTransforms,
 )
 
-from hela_testing.common_test import SigmoidTest, GaussianTest
+from hela_testing.common_test import (
+    SigmoidTest,
+    GaussianTest,
+    TestContinuousDistribution,
+    TestBetaDistribution,
+)
 
 if __name__ == "__main__":
     # Create instances of your test classes
@@ -24,7 +29,11 @@ if __name__ == "__main__":
     )
 
     sigmoid_test_suite = unittest.TestLoader().loadTestsFromTestCase(SigmoidTest)
-    gaussian_test_suit = unittest.TestLoader().loadTestsFromTestCase(GaussianTest)
+    gaussian_test_suite = unittest.TestLoader().loadTestsFromTestCase(GaussianTest)
+    test_continous_suite = unittest.TestLoader().loadTestsFromTestCase(
+        TestContinuousDistribution
+    )
+    test_beta_suite = unittest.TestLoader().loadTestsFromTestCase(TestBetaDistribution)
 
     # Combine the test suites
     all_tests = unittest.TestSuite(
@@ -34,7 +43,9 @@ if __name__ == "__main__":
             harmonic_mean_test,
             fft_test_suite,
             sigmoid_test_suite,
-            gaussian_test_suit,
+            gaussian_test_suite,
+            test_continous_suite,
+            test_beta_suite,
         ]
     )
 

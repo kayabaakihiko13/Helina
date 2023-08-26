@@ -1,6 +1,5 @@
 import unittest
 import numpy as np
-import math
 from Hela.math import (
     GeometricMean,
     PowerIteration,
