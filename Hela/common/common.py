@@ -1,5 +1,6 @@
 from __future__ import annotations
 import numpy as np
+import math
 from typing import Any, Union
 
 
@@ -410,3 +411,98 @@ class SignalAnalysis:
                 i * delay : i * delay + embedded_series.shape[1]
             ]
         return embedded_series.T
+
+
+class Sigmoid:
+    def __init__(self, vector: list):
+        """
+        Initialize the sigmoid function calculator
+
+        This class computes the sigmoid values for a given input vector
+        of numerical values. the class takes vector of real numbers as input
+        and then 1 / (1 + exp(-x)). after through sigmoid, the element of the
+        vector mostly 0 between 1. or 1 between -1.
+
+        Parameters:
+            vector (list): A list of numerical values for sigmoid calculation
+
+        Example
+        >>> sigmoid = Sigmoid([0.5, -1.0, 2.0])
+        """
+        self.vector = vector
+
+    def calculate_sigmoid(self) -> list:
+        """
+        Calculation sigmoid values for the input vector
+
+        Returns:
+            (list): A list sigmoid values corresponds to the input vector
+
+        Example
+        >>> sigmoid = Sigmoid([0.5, -1.0, 2.0])
+        >>> print(sigmoid.calculate_sigmoid())
+        [0.6224593312018546, 0.2689414213699951, 0.8807970779778823]
+        """
+        return [1 / (1 + math.exp(-x)) for x in self.vector]
+
+    def __repr__(self) -> str:
+        """
+        Return a string representation of the sigmoid instance
+
+        Returns:
+            (str): a string representation of the sigmoid function
+
+        Example
+        >>> sigmoid = Sigmoid([0.5, -1.0, 2.0])
+        >>> print(sigmoid)
+        Sigmoid([0.5, -1.0, 2.0])
+        """
+        return f"Sigmoid({self.vector})"
+
+
+class Gaussian:
+    def __init__(self, x, mu: float = 0.0, sigma: float = 1.0):
+        """
+        initialize a guassian
+
+        this class provides methods for calculating the value of the
+        gaussian function at a specified input, based on given mean and
+        standard deviation
+
+        Parameters:
+            x (float): the input value at which to calculate the gaussian function
+            mu (float): the mean (average) of the gaussian distribution
+            sigma (float): the standard deviation of the gaussian distribution
+        """
+        self.x = x
+        self.mu = mu
+        self.sigma = sigma
+
+    def calculate_gaussian(self) -> list[float]:
+        """
+        calculate the value of the gaussian function at the specified input
+
+        Return:
+            float: the value of the gaussian function at the given input
+
+        Example
+        >>> gaussian_calc = Gaussian(x=2.0, mu=0.0, sigma=1.0)
+        >>> gaussian_value = gaussian_calc.calculate_gaussian()
+        >>> print(f"Gaussian value at x = {gaussian_calc.x}: {gaussian_value:.6f}")
+        Gaussian value at x = 2.0: 0.053990
+        """
+        result = (
+            1
+            / np.sqrt(2 * np.pi * self.sigma**2)
+            * np.exp(-((self.x - self.mu) ** 2) / (2**self.sigma**2))
+        )
+        return result
+
+    def __repr__(self) -> str:
+        """
+        return a string representation of the gaussian instance
+
+        Return:
+            (str): a string representation of the gaussian instance
+        """
+        return f"Gaussian(x={self.x}, mu={self.mu}, sigma={self.sigma})"

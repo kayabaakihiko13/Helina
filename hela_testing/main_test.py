@@ -7,6 +7,8 @@ from hela_testing.math_testing import (
     TestFastFourierTransforms,
 )
 
+from hela_testing.common_test import SigmoidTest, GaussianTest
+
 if __name__ == "__main__":
     # Create instances of your test classes
     power_iteration_suite = unittest.TestLoader().loadTestsFromTestCase(
@@ -21,6 +23,9 @@ if __name__ == "__main__":
         TestFastFourierTransforms
     )
 
+    sigmoid_test_suite = unittest.TestLoader().loadTestsFromTestCase(SigmoidTest)
+    gaussian_test_suit = unittest.TestLoader().loadTestsFromTestCase(GaussianTest)
+
     # Combine the test suites
     all_tests = unittest.TestSuite(
         [
@@ -28,6 +33,8 @@ if __name__ == "__main__":
             geometric_mean_suite,
             harmonic_mean_test,
             fft_test_suite,
+            sigmoid_test_suite,
+            gaussian_test_suit,
         ]
     )
 

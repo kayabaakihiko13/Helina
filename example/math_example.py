@@ -1,6 +1,7 @@
 import numpy as np
-import math
 from Hela.math import GeometricMean, PowerIteration, Harmonic, FastFourierTransforms
+
+from Hela.common.common import Gaussian
 
 if __name__ == "__main__":
     # geometric mean example
@@ -51,3 +52,7 @@ if __name__ == "__main__":
     output_vector = fft_instance.discrectefft(input_vector)
     print("Input vector:", input_vector)
     print("Output vector (Discrete FFT):", output_vector)
+
+    x = np.arange(15)
+    gauss = Gaussian(x)
+    print(gauss.calculate_gaussian())
