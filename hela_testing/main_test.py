@@ -20,6 +20,8 @@ from hela_testing.distribution_test import (
     TestDirichletDistribution,
 )
 
+from hela_testing.differential_testing import TestDifferential
+
 if __name__ == "__main__":
     # Create instances of your test classes
     power_iteration_suite = unittest.TestLoader().loadTestsFromTestCase(
@@ -50,6 +52,10 @@ if __name__ == "__main__":
         TestDirichletDistribution
     )
 
+    test_differential_derivative_suite = unittest.TestLoader().loadTestsFromTestCase(
+        TestDifferential
+    )
+
     # Combine the test suites
     all_tests = unittest.TestSuite(
         [
@@ -64,6 +70,7 @@ if __name__ == "__main__":
             test_beta_suite,
             test_exponential_suite,
             test_dirichlet_distribution_suite,
+            test_differential_derivative_suite,
         ]
     )
 
