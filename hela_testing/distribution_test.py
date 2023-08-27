@@ -5,7 +5,7 @@ from Hela.common.distribution import (
     BetaDistribution,
     ExponetialDistribution,
     DirichletDistribution,
-    ChiSquareDistribution
+    ChiSquareDistribution,
 )
 
 
@@ -60,7 +60,7 @@ class TestDirichletDistribution(unittest.TestCase):
 
     def test_dirichlet_pdf_different_length(self):
         with self.assertRaises(ValueError):
-            DirichletDistribution.dirichlet_pdf([0.3,  0.3], alpha=[2])
+            DirichletDistribution.dirichlet_pdf([0.3, 0.3], alpha=[2])
 
 
 class TestChiSquaredDistribution(unittest.TestCase):

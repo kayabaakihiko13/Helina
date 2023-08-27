@@ -1,7 +1,6 @@
 from __future__ import annotations
 import math
 import random
-from typing import Union
 
 
 class NormalDistribution:
@@ -288,9 +287,7 @@ class ChiSquareDistribution:
         return pdf_value
 
     @staticmethod
-    def chi_squared_cdf(
-        x: Union[float, list[float]], df: int
-    ) -> Union[float, list[float]]:
+    def chi_squared_cdf(x: float, df: int) -> float | list[float]:
         """
         calculate the Cumulative Distribution Function (CDF) of the Chi-Square Distribution.
 
