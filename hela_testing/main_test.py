@@ -10,8 +10,14 @@ from hela_testing.math_testing import (
 from hela_testing.common_test import (
     SigmoidTest,
     GaussianTest,
+)
+
+from hela_testing.distribution_test import (
+    TestNormalDistribution,
     TestContinuousDistribution,
     TestBetaDistribution,
+    TestExponentialDistribution,
+    TestDirichletDistribution,
 )
 
 if __name__ == "__main__":
@@ -30,10 +36,19 @@ if __name__ == "__main__":
 
     sigmoid_test_suite = unittest.TestLoader().loadTestsFromTestCase(SigmoidTest)
     gaussian_test_suite = unittest.TestLoader().loadTestsFromTestCase(GaussianTest)
+    test_normal_distribution_suite = unittest.TestLoader().loadTestsFromTestCase(
+        TestNormalDistribution
+    )
     test_continous_suite = unittest.TestLoader().loadTestsFromTestCase(
         TestContinuousDistribution
     )
     test_beta_suite = unittest.TestLoader().loadTestsFromTestCase(TestBetaDistribution)
+    test_exponential_suite = unittest.TestLoader().loadTestsFromTestCase(
+        TestExponentialDistribution
+    )
+    test_dirichlet_distribution_suite = unittest.TestLoader().loadTestsFromTestCase(
+        TestDirichletDistribution
+    )
 
     # Combine the test suites
     all_tests = unittest.TestSuite(
@@ -44,8 +59,11 @@ if __name__ == "__main__":
             fft_test_suite,
             sigmoid_test_suite,
             gaussian_test_suite,
+            test_normal_distribution_suite,
             test_continous_suite,
             test_beta_suite,
+            test_exponential_suite,
+            test_dirichlet_distribution_suite,
         ]
     )
 
