@@ -18,6 +18,10 @@ from hela_testing.distribution_test import (
     TestBetaDistribution,
     TestExponentialDistribution,
     TestDirichletDistribution,
+    TestHypergeometricDistribution,
+    TestPoisson,
+    TestBinomialDistribution,
+    TestStudentDistribution,
 )
 
 from hela_testing.differential_testing import TestDifferential
@@ -55,6 +59,16 @@ if __name__ == "__main__":
     test_differential_derivative_suite = unittest.TestLoader().loadTestsFromTestCase(
         TestDifferential
     )
+    test_binomial_distribution_pmf_suite = unittest.TestLoader().loadTestsFromTestCase(
+        TestBinomialDistribution
+    )
+    test_student_distribution_suite = unittest.TestLoader().loadTestsFromTestCase(
+        TestStudentDistribution
+    )
+    test_hypergeometric_suite = unittest.TestLoader().loadTestsFromTestCase(
+        TestHypergeometricDistribution
+    )
+    test_poisson_suite = unittest.TestLoader().loadTestsFromTestCase(TestPoisson)
 
     # Combine the test suites
     all_tests = unittest.TestSuite(
@@ -71,6 +85,10 @@ if __name__ == "__main__":
             test_exponential_suite,
             test_dirichlet_distribution_suite,
             test_differential_derivative_suite,
+            test_binomial_distribution_pmf_suite,
+            test_student_distribution_suite,
+            test_hypergeometric_suite,
+            test_poisson_suite,
         ]
     )
 

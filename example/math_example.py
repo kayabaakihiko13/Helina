@@ -2,6 +2,7 @@ import numpy as np
 from Hela.math import GeometricMean, PowerIteration, Harmonic, FastFourierTransforms
 
 from Hela.common.common import Gaussian
+from Hela.common.distribution import HypergeometricDistribution
 
 if __name__ == "__main__":
     # geometric mean example

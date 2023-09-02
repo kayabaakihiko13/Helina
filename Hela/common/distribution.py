@@ -328,6 +328,95 @@ class ChiSquareDistribution:
         return cdf_values
 
 
+class BinomialDistribution:
+    @staticmethod
+    def binomial_pmf(n: int, p: float, k: int) -> float:
+        """
+        calculate the probabilty mass function (PMF) of a
+        binomial distribution
+
+        the binomial distribution models the number of success (k) in a fixed
+        number of independent bernouli trials (n), where each trial has a
+        probabilty of success (p)
+
+        Args:
+            n (int): the number of trials
+            p (float): probability of success in a single trial
+            k (int): number of successes to calculate the PMF for
+        Returns:
+            (float): probability of exactly k successes n trials
+
+        Examples:
+        >>> BinomialDistribution.binomial_pmf(5, 0.3, 2)
+        0.308
+        """
+        if not 0 <= p <= 1:
+            raise ValueError("probability p must between 0 and 1")
+        if not isinstance(n, int) or not isinstance(k, int):
+            raise ValueError("n and k must be integers")
+        if n < 0 or k < 0 or k > n:
+            return 0
+
+        def binomial_coefficient(n: int, k: int) -> int:
+            if k == 0 or k == n:
+                return 1
+            return binomial_coefficient(n - 1, k - 1) + binomial_coefficient(n - 1, k)
+
+        binomial_coef = binomial_coefficient(n, k)
+        pmf = binomial_coef * (p**k) * ((1 - p) ** (n - k))
+        return pmf
+
+    @staticmethod
+    def binomial_coefficient(n: int, k: int) -> int:
+        """
+        calculate the binomial coefficient (n choose k)
+
+        Args:
+            n (int): the total number of item
+            k (int): number of items to choose
+
+        Return:
+            (int): the binomial coefficient (n choose k)
+        """
+        if k < 0 or k > n:
+            return 0
+        if k == 0 or k == n:
+            return 1
+
+        numerator = math.factorial(n)
+        denominator = math.factorial(k) * math.factorial(n - k)
+        return numerator // denominator
+
+
+class HypergeometricDistribution:
+    @staticmethod
+    def hypergeometric_pmf(N: int, K: int, n: int, k: int) -> float:
+        """
+        calaculate the probability mass function (PMF) of a hypergeometric distribution
+
+        the hypergeometric distribution models the probability of drawing k success
+        in a sample of size n without replacement from a finite population of size N
+        containing K successes and (N - K) failures
+
+        Args:
+            N (int): total population size.
+            K (int): number of successes in the population.
+            n (int): sample size.
+            k (int): number of successes to calculate the PMF for.
+
+        Returns:
+            (float): the probability of exactly k successes in the sample
+        """
+        if not (0 <= K <= N and 0 <= n <= N and 0 <= k <= n):
+            raise ValueError("invalid input values")
+        numerator = BinomialDistribution.binomial_coefficient(
+            K, K
+        ) * BinomialDistribution.binomial_coefficient(N - K, n - k)
+        denominator = BinomialDistribution.binomial_coefficient(N, n)
+        pmf = numerator / denominator
+        return pmf
+
+
 class Poisson:
     """
     # Description

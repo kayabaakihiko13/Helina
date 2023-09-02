@@ -6,8 +6,10 @@ from Hela.common.distribution import (
     BetaDistribution,
     ExponetialDistribution,
     DirichletDistribution,
+    BinomialDistribution,
     ChiSquareDistribution,
     Poisson,
+    HypergeometricDistribution,
     student_distribution,
 )
 
@@ -76,7 +78,35 @@ class TestChiSquaredDistribution(unittest.TestCase):
         self.assertAlmostEqual(cdf, 0.48982412914811513)
 
 
-class TestingPoisson(unittest.TestCase):
+class TestBinomialDistribution(unittest.TestCase):
+    def test_binomal_pmf_valid_inputs(self):
+        self.assertAlmostEqual(
+            BinomialDistribution.binomial_pmf(10, 0.5, 5), 0.24609375
+        )
+
+    def test_binomal_pmf_invalid_input(self):
+        with self.assertRaises(ValueError):
+            BinomialDistribution.binomial_pmf(5, -0.1, 2)
+        with self.assertRaises(ValueError):
+            BinomialDistribution.binomial_pmf(5, 1.1, 2)
+
+
+class TestHypergeometricDistribution(unittest.TestCase):
+    def test_hypergeometric_pmf_valid_input(self):
+        self.assertAlmostEqual(
+            HypergeometricDistribution.hypergeometric_pmf(50, 15, 10, 4),
+            0.00015801363369816142,
+        )
+
+    def test_hypergeometric_pmf_invalid_inputs(self):
+        with self.assertRaises(ValueError):
+            HypergeometricDistribution.hypergeometric_pmf(50, 60, 10, 4)
+
+        with self.assertRaises(ValueError):
+            HypergeometricDistribution.hypergeometric_pmf(-50, 15, 10, 4)
+
+
+class TestPoisson(unittest.TestCase):
     def test_poisson_pdf(self):
         pmf = Poisson.poisson_pmf(x=5, alpha=2)
         self.assertAlmostEqual(pmf, 0.03608940886309672)
@@ -89,7 +119,7 @@ class TestingPoisson(unittest.TestCase):
         self.assertAlmostEqual(cdf.any(), expected_result.any())
 
 
-class Test_Student_distribution(unittest.TestCase):
+class TestStudentDistribution(unittest.TestCase):
     def test_T_Distribution_pdf(self):
         vector = np.array([1, 2, 3, 4])
         pdf = student_distribution.t_distribution_pdf(vector)
