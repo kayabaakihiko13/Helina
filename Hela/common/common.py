@@ -1,8 +1,7 @@
 from __future__ import annotations
 import numpy as np
-import random
 import math
-from typing import Any, Union
+from typing import Any, Union, Iterable
 
 
 class LargeNumber:
@@ -21,7 +20,7 @@ class LargeNumber:
             >>> large_num = LargeNumber(12345)
             >>> large_num = LargeNumber(12.345)
         """
-        self._digits = [1]
+        self._digits: list = [1]
         if isinstance(number, int):
             for i in str(number).strip():
                 self._digits.append(int(i))
@@ -59,10 +58,10 @@ class LargeNumber:
             raise ValueError("Can only add LargeNumber objects")
 
         result = LargeNumber()
-        carry = 0
+        carry: int = 0
         for i in range(max(len(self._digits), len(other._digits))):
             if i < len(self._digits):
-                digit_sum = self._digits[i] + other._digits[i] + carry
+                digit_sum: int = self._digits[i] + other._digits[i] + carry
             else:
                 digit_sum = other._digits[i] + carry
             carry = digit_sum // 10
@@ -179,7 +178,7 @@ class Matrix:
         >>> Matrix.minor(matrix, 1, 1)
         [[1, 3], [7, 9]]
         """
-        minor = matrix[:row] + matrix[row + 1 :]
+        minor: list = matrix[:row] + matrix[row + 1 :]
         return [row[:column] + row[column + 1 :] for row in minor]
 
     @staticmethod
@@ -221,7 +220,7 @@ class Matrix:
         >>> Matrix.inverse(matrix)
         [[-5.0, 3.0], [4.0, -2.0]]
         """
-        det = Matrix.determinant(matrix)
+        det: float = Matrix.determinant(matrix)
         if det == 0:
             return None
 
@@ -287,7 +286,9 @@ class Matrix:
         >>> Matrix._verify_matrix_size(matrix_a, matrix_b)
         ((2, 2), (2, 2))
         """
-        shape = Matrix._shape(matrix_a) + Matrix._shape(matrix_b)
+        shape: tuple[int, int, int, int] = Matrix._shape(matrix_a) + Matrix._shape(
+            matrix_b
+        )
         if shape[0] != shape[3] or shape[1] != shape[2]:
             msg = (
                 "_verify_matrix_size(): operands could be broadcast together "
@@ -475,9 +476,9 @@ class Gaussian:
             mu (float): the mean (average) of the gaussian distribution
             sigma (float): the standard deviation of the gaussian distribution
         """
-        self.x = x
-        self.mu = mu
-        self.sigma = sigma
+        self.x: float = x
+        self.mu: float = mu
+        self.sigma: float = sigma
 
     def calculate_gaussian(self) -> list[float]:
         """
@@ -492,7 +493,7 @@ class Gaussian:
         >>> print(f"Gaussian value at x = {gaussian_calc.x}: {gaussian_value:.6f}")
         Gaussian value at x = 2.0: 0.053990
         """
-        result = (
+        result: list[float] = (
             1
             / np.sqrt(2 * np.pi * self.sigma**2)
             * np.exp(-((self.x - self.mu) ** 2) / (2**self.sigma**2))
@@ -521,7 +522,7 @@ class ReLU:
         Args:
             vector (list[int | float]) : input values
         """
-        self.vec = vector
+        self.vec: list[int | float] = vector
 
     def calculate_ReLu(self) -> list[int | float]:
         """
@@ -564,8 +565,8 @@ class Logistic_map:
         >>> Logistic_map(10,0.001).calculate()
         -0.09
         """
-        self.n = n
-        self.learning_path = learning_path
+        self.n: int = n
+        self.learning_path: float = learning_path
 
     def calculate(self) -> float:
         """
@@ -580,3 +581,38 @@ class Logistic_map:
         for i in range(1, self.n + 1):
             result_str += f"iter: {i} | result = {self.calculate()}\n"
         return result_str
+
+
+class BayesTheorem:
+    @staticmethod
+    def bayes_theorem(p_a: float, p_b_given_a: float, p_b_given_not_a: float) -> float:
+        """
+        calculate the probabilities using bayes theorem
+
+        baye's theorem calculates the probability of an event a happening given that
+        event B has occured
+
+        Args:
+            p_a (float): probability of event A
+            p_b_given_a (float): the probability of event B given that event A has occured
+            p_b_given_not_a (float): the probability of event B given that event A has not occured
+
+        Returns:
+            (float): the probability of event A given B (P(A|B))
+
+        Example:
+        >>> BayesTheorem.bayes_theorem(0.3, 0.7, 0.4)
+        0.4286
+        """
+        if (
+            not (0 <= p_a <= 1)
+            or not (0 <= p_b_given_a <= 1)
+            or not (0 <= p_b_given_not_a <= 1)
+        ):
+            raise ValueError("probabilities must be in the range [0, 1]")
+
+        # calculate P(B)
+        p_b: float = (p_a * p_b_given_a) + ((1 - p_a) * p_b_given_not_a)
+        # calculate P(A|B) using bayes theorem
+        p_a_given_b: float = (p_a * p_b_given_a) / p_b if p_b != 0 else 0
+        return p_a_given_b

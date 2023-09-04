@@ -10,6 +10,8 @@ from hela_testing.math_testing import (
 from hela_testing.common_test import (
     SigmoidTest,
     GaussianTest,
+    TestBayesTheorem,
+    TestReLU,
 )
 
 from hela_testing.distribution_test import (
@@ -55,6 +57,7 @@ if __name__ == "__main__":
     test_dirichlet_distribution_suite = unittest.TestLoader().loadTestsFromTestCase(
         TestDirichletDistribution
     )
+    test_relu_suite = unittest.TestLoader().loadTestsFromTestCase(TestReLU)
 
     test_differential_derivative_suite = unittest.TestLoader().loadTestsFromTestCase(
         TestDifferential
@@ -69,6 +72,7 @@ if __name__ == "__main__":
         TestHypergeometricDistribution
     )
     test_poisson_suite = unittest.TestLoader().loadTestsFromTestCase(TestPoisson)
+    test_bayes_suite = unittest.TestLoader().loadTestsFromTestCase(TestBayesTheorem)
 
     # Combine the test suites
     all_tests = unittest.TestSuite(
@@ -89,6 +93,8 @@ if __name__ == "__main__":
             test_student_distribution_suite,
             test_hypergeometric_suite,
             test_poisson_suite,
+            test_bayes_suite,
+            test_relu_suite,
         ]
     )
 

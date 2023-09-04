@@ -1,6 +1,6 @@
 import unittest
 import math
-from Hela.common.common import Sigmoid, Gaussian, ReLU
+from Hela.common.common import Sigmoid, Gaussian, ReLU, BayesTheorem
 
 
 class SigmoidTest(unittest.TestCase):
@@ -28,7 +28,17 @@ class GaussianTest(unittest.TestCase):
         self.assertEqual(representation, "Gaussian(x=2.0, mu=1.0, sigma=0.5)")
 
 
-class ReLU(unittest.TestCase):
+class TestBayesTheorem(unittest.TestCase):
+    def test_bayes_theorem_valid_inputs(self):
+        result = BayesTheorem.bayes_theorem(0.3, 0.7, 0.4)
+        self.assertAlmostEqual(result, 0.42857142857142855)
+
+    def test_bayes_theorem_invalid_inputs(self):
+        with self.assertRaises(ValueError):
+            BayesTheorem.bayes_theorem(-0.1, 0.7, 0.4)
+
+
+class TestReLU(unittest.TestCase):
     def Test_ReLU(self):
         vector = [1, 2, 3, 4]
         result = ReLU(vector).calculate_ReLu(vector)
