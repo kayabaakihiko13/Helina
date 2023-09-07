@@ -121,7 +121,7 @@ class Differential(object):
             raise ValueError(f"error: {error_quotient_derivative}")
 
     @staticmethod
-    def composite_derivative(w, u, x:int) -> float:
+    def composite_derivative(w, u, x: int) -> float:
         """
         calculate the derivative of the composite function w(u(x)) using chain rule
 
