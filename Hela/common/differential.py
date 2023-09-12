@@ -11,7 +11,7 @@ class Differential(object):
     """
 
     @staticmethod
-    def derivative(f, x: float|int, h: float = 1e-6) -> float:
+    def derivative(f, x: float | int, h: float = 1e-6) -> float:
         """
         calculate the derivative of a function using the limit definition
 
@@ -37,7 +37,7 @@ class Differential(object):
             raise ValueError(f"error {error_derivative}")
 
     @staticmethod
-    def power_derivative(n: int, x: float|int) -> float:
+    def power_derivative(n: int, x: float | int) -> float:
         """
         calculate the derivative of x^n using the power rule
 
@@ -60,8 +60,7 @@ class Differential(object):
             raise ValueError(f"error: {error_power_derivative}")
 
     @staticmethod
-    def product_derivate(u, v,
-                         x: float | int) -> float:
+    def product_derivate(u, v, x: float | int) -> float:
         """
         calculate the derivative of the product of two functions u(x) and v(x)
         using product rule
@@ -85,15 +84,14 @@ class Differential(object):
         80.0
         """
         try:
-            u_derivative = Differential.derivative(u,x)
-            v_derivative = Differential.derivative(v,x)
+            u_derivative = Differential.derivative(u, x)
+            v_derivative = Differential.derivative(v, x)
             return u_derivative * v(x) + u(x) * v_derivative
         except Exception as error_product_derivative:
             raise ValueError(f"error {error_product_derivative}")
 
     @staticmethod
-    def quotient_derivate(u, v,
-                          x: float | int):
+    def quotient_derivate(u, v, x: float | int):
         """
         calculate the derivative of the quotient of two functions u(x) and v(x) using
         quotient rule
@@ -117,15 +115,14 @@ class Differential(object):
         -1.0
         """
         try:
-            u_derivative = Differential.derivative(u,x)
-            v_derivative = Differential.derivative(v,x)
+            u_derivative = Differential.derivative(u, x)
+            v_derivative = Differential.derivative(v, x)
             return (v_derivative * u(x) - u_derivative * v(x)) / math.pow(v(x), 2)
         except Exception as error_quotient_derivative:
             raise ValueError(f"error: {error_quotient_derivative}")
 
     @staticmethod
-    def composite_derivative(w, u,
-                             x: int | float) -> float:
+    def composite_derivative(w, u, x: int | float) -> float:
         """
         calculate the derivative of the composite function w(u(x)) using chain rule
 
@@ -148,9 +145,8 @@ class Differential(object):
         300
         """
         try:
-            
-            w_derivative = Differential.derivative(w,u(x))
-            u_derivative = Differential.derivative(u,x)
+            w_derivative = Differential.derivative(w, u(x))
+            u_derivative = Differential.derivative(u, x)
             return w_derivative * u_derivative
         except Exception as error_composite_derivative:
             raise ValueError(f"error: {error_composite_derivative}")
