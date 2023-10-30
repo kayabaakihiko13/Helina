@@ -1,11 +1,12 @@
 from __future__ import annotations
 import numpy as np
 
+
 class AntiDifferential(object):
-    
     @staticmethod
-    def general_antiderivative(f,a:int,b:int,num_interval:int=4,
-                               method:str="riemann") -> float:
+    def general_antiderivative(
+        f, a: int, b: int, num_interval: int = 4, method: str = "riemann"
+    ) -> float:
         """
         ## Description
 
@@ -31,20 +32,21 @@ class AntiDifferential(object):
                 result = 0
                 for i in range(num_interval):
                     x_i = a + i * delta_x
-                    result += (f(x_i) * delta_x)
+                    result += f(x_i) * delta_x
                 return round(result)
             if method == "trapezoidal":
                 # setting result of antidifferential
                 result = 0.5 * (f(a) + f(b))
-                for i in range(1,num_interval):
+                for i in range(1, num_interval):
                     result += f(a + i * delta_x)
                 return round(result * delta_x)
 
         except Exception as error_integral:
             raise ValueError(f"Error {error_integral}")
         return 0
+
     @staticmethod
-    def PowerRule_antiderivative(n:int,x:int|float)-> float:
+    def PowerRule_antiderivative(n: int, x: int | float) -> float:
         """
         ## Description
 
@@ -57,8 +59,6 @@ class AntiDifferential(object):
             float: The antiderivative result of the Power Rule.
         """
         try:
-            return np.power(x,n+1) / (n + 1)
+            return np.power(x, n + 1) / (n + 1)
         except Exception as powerrule_antidiffential:
             raise ValueError(f"error :{powerrule_antidiffential}")
-
-        
