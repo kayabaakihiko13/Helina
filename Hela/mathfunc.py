@@ -1,7 +1,7 @@
 import operator
 import math
 import cmath
-from typing import Union, Optional
+from typing import Union, Optional, Callable, Any, SupportsFloat
 
 
 INF = 1e300 * 1e300
@@ -227,7 +227,7 @@ _zeta_0 = [
 EI_ASYMP_CONVERGENCE_RADIUS = 40.0
 
 
-def _mathfunction_real(fun_real: float, fun_complex: complex) -> None:
+def _mathfunction_real(fun_real: Callable, fun_complex: Callable) -> Callable:
     """
     create a function that can handle both real and complex input
 
@@ -288,7 +288,7 @@ def _mathfunction_real(fun_real: float, fun_complex: complex) -> None:
     return f
 
 
-def _mathfunction(func_real: callable, func_complex: callable) -> callable:
+def _mathfunction(func_real: Callable, func_complex: Callable) -> Callable:
     """
     create a function that can handle both real and complex input
 
@@ -346,7 +346,7 @@ def _mathfunction(func_real: callable, func_complex: callable) -> callable:
     return f
 
 
-def _mathfunction_n(func_real: callable, func_complex: callable) -> callable:
+def _mathfunction_n(func_real: Callable, func_complex: Callable) -> Callable:
     """
     create a function that can handle both real and complex input
 
@@ -416,14 +416,14 @@ def nthroot(x: float, n: complex) -> float | complex:
         return complex(x) ** r
 
 
-def _sinpi_real(x: float) -> float:
+def _sinpi_real(x: float) -> Any:
     """
     calculate the sine of x*pi for real numbers
 
     Args:
         x (float): the input value
     Returns:
-        float: the sine of x*pi
+        Any: the sine of x*pi
     """
     if x < 0:
         return -_sinpi_real(-x)
@@ -440,14 +440,14 @@ def _sinpi_real(x: float) -> float:
         return -math.cos(r)
 
 
-def _cospi_real(x: float) -> float:
+def _cospi_real(x: float) -> Any:
     """
     calculate the cosine of x * pi for real numbers
 
     Args:
         x (float): the input value
     Returns:
-        float: the cosinue of x*pi
+        Any: the cosinue of x*pi
     """
     if x < 0:
         x = -x
@@ -464,14 +464,14 @@ def _cospi_real(x: float) -> float:
         return math.sin(r)
 
 
-def _sinpi_complex(z: complex) -> complex:
+def _sinpi_complex(z: complex) -> Any:
     """
     calculate the sine of z*pi for complex number
 
     Args:
         z (complex): the input value
     Returns:
-        complex: the sine of z*pi
+        Any: the sine of z*pi
     """
     if z.real < 0:
         return -_sinpi_complex(-z)
@@ -488,14 +488,14 @@ def _sinpi_complex(z: complex) -> complex:
         return cmath.sin(z)
 
 
-def _cospi_complex(z: complex) -> complex:
+def _cospi_complex(z: complex) -> Any:
     """
     calculate the cosine of z*pi complex numbers
 
     Args:
         z (complex): the input value
     Returns:
-        complex: the cosine z*pi
+        Any: the cosine z*pi
     """
     if z.real < 0:
         z = -z
@@ -516,14 +516,14 @@ cospi = _mathfunction_real(_cospi_real, _cospi_complex)
 sinpi = _mathfunction_real(_sinpi_real, _sinpi_complex)
 
 
-def tanpi(x: float) -> complex:
+def tanpi(x):
     """
     calculate the target of x * pi
 
     Args:
         x (float): the input value
     Returns:
-        complex: the tangent of x * pi
+        float: the tangent of x * pi
     Raises:
         OverflowError: if the result is an overflow
 
@@ -537,7 +537,7 @@ def tanpi(x: float) -> complex:
         return sinpi(x) / cospi(x)
     except OverflowError as error:
         print(error)
-        if complex(x).image > 10:
+        if complex(x).imag > 10:
             return 1j
         if complex(x).imag < 10:
             return -1j
@@ -602,8 +602,7 @@ def _gamma_real(x: float) -> Union[float, complex]:
         ...
     ZeroDivisionError: gamma function pole
     """
-    _intx = int(x)
-    if _intx == x:
+    if (_intx := int(x)) == x:
         if _intx <= 0:
             raise ZeroDivisionError("gamma function pole")
         if _intx <= _max_exact_gamma:
@@ -619,7 +618,7 @@ def _gamma_real(x: float) -> Union[float, complex]:
         return 2.506628274631000502417 * t ** (x + 0.5) * math.exp(-t) * r
 
 
-def _gamma_complex(x: Union[float, complex]) -> complex:
+def _gamma_complex(x: float) -> float | complex:
     """
     calculate the gamma function for complex numbers
 
@@ -627,7 +626,7 @@ def _gamma_complex(x: Union[float, complex]) -> complex:
         x (float or complex): the input value
 
     Returns:
-        complex: the result of the gamma function
+        float or complex: the result of the gamma function
 
     Example:
     >>> result = _gamma_complex(5)
@@ -961,7 +960,7 @@ def erfc(x):
     return 1.0 - _erf_taylor(x)
 
 
-def ei_asymp(z: Union[float, complex], _e1: Optional[bool] = False) -> complex:
+def ei_asymp(z: float, _e1: Optional[bool] = False) -> complex:
     """
     compute the exponential integral using asymptotic expansion
 
@@ -1039,7 +1038,7 @@ def ei_taylor(z: Union[complex, float], _e1: Optional[bool] = False) -> complex:
     return s
 
 
-def ei(z: Union[float, complex], _e1: Optional[bool] = False) -> complex:
+def ei(z, _e1=False):
     """
     compute the exponential integral
 
@@ -1081,7 +1080,7 @@ def ei(z: Union[float, complex], _e1: Optional[bool] = False) -> complex:
     if type(z) is complex:
         _exp = cmath.exp
     else:
-        _exp = math.exp
+        _exp = cmath.exp
     for x, w in gauss42:
         t = C * x + D
         s += w * _exp(t) / t
@@ -1150,8 +1149,7 @@ def zeta(s):
         raise ValueError("zeta(1) pole")
     if s >= 27:
         return 1.0 + 2.0 ** (-s) + 3.0 ** (-s)
-    n = int(s)
-    if n == s:
+    if (n := int(s)) == s:
         if n >= 0:
             return _zeta_int[n]
         if not (n % 2):

@@ -1,4 +1,4 @@
-from Hela.common.common import BayesTheorem
+from Hela.common.common_number import BayesTheorem
 
 # probability of an email spam (prior probability)
 p_a: float = 0.2

@@ -1,6 +1,6 @@
 import unittest
 import math
-from Hela.common.common import Sigmoid, Gaussian, ReLU, BayesTheorem
+from Hela.common.math_common import Sigmoid, Gaussian, ReLU, BayesTheorem
 
 
 class SigmoidTest(unittest.TestCase):
