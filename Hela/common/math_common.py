@@ -617,6 +617,7 @@ class BayesTheorem:
         p_a_given_b: float = (p_a * p_b_given_a) / p_b if p_b != 0 else 0
         return p_a_given_b
 
+
 class GeometricMean:
     """
     Calculate the geometric mean of a list of numbers.

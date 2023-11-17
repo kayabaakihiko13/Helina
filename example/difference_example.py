@@ -1,9 +1,13 @@
+from __future__ import annotations
 from Hela.common.differential import Differential
 
 if __name__ == "__main__":
     # this for Defivative example
     print("Differential Derivative")
-    func = lambda x: x**2
+
+    def func(x):
+        return x**2
+
     value_input: int = 3
     calculate_defivative: float = Differential.derivative(func, value_input)
     print(f"result Derivative:{calculate_defivative:.3f}")
@@ -17,14 +21,24 @@ if __name__ == "__main__":
 
     # Differential Product Derivative
     print("\nProduct Derivative")
-    a_func = lambda x: x**2
-    b_func = lambda x: x
+
+    def a_func(x):
+        return x**2
+
+    def b_func(x):
+        return x
+
     input_value: int = 3
     result = Differential.product_derivate(a_func, b_func, 2)
     print(f"Result Product Derivate {result}")
     # Differential Derivative Quotient
     print("\nDerivative Quotient")
-    u_func: function = lambda x: x**2
-    v_func: function = lambda x: x
+
+    def u_func(x):
+        return x**2
+
+    def v_func(x):
+        return x
+
     result = Differential.quotient_derivate(u_func, v_func, 2)
     print(f"Result of Derivative Quotient:{result}")
