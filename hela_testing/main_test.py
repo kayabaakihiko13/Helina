@@ -20,6 +20,7 @@ from hela_testing.distribution_test import (
 )
 
 from hela_testing.differential_test import TestDifferential
+from hela_testing.antidifferential_test import TestAntriDifferential
 from hela_testing.mathfunction_test import TestMathFunctionReal, TestPolyvalFunction
 from hela_testing.nthroot_test import TestNthRootFunction
 from hela_testing.pi_function_test import TestPiFunction
@@ -65,6 +66,10 @@ if __name__ == "__main__":
         TestPolyvalFunction,
     )
 
+    test_antidifferential_suite = unittest.TestLoader().loadTestsFromTestCase(
+        TestAntriDifferential
+    )
+
     test_nthroot_real_suite = unittest.TestLoader().loadTestsFromTestCase(
         TestNthRootFunction
     )
@@ -92,6 +97,7 @@ if __name__ == "__main__":
             test_differential_derivative_suite,
             test_binomial_distribution_pmf_suite,
             test_student_distribution_suite,
+            test_antidifferential_suite,
             test_hypergeometric_suite,
             test_poisson_suite,
             test_bayes_suite,
