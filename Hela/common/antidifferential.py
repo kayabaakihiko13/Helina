@@ -46,8 +46,8 @@ def general_antiderivative(
 
         if method == "simpson":
             s = f(a) + f(b)
-            for i in range(1,num_interval,2):
-                s += 4 * f(a+i * delta_x)
+            for i in range(1, num_interval, 2):
+                s += 4 * f(a + i * delta_x)
             for i in range(2, num_interval - 1, 2):
                 s += 2 * f(a + i * delta_x)
             return s * delta_x / 3
@@ -116,8 +116,8 @@ def Mean_Value_AntiDifferential(
     """
     return general_antiderivative(f, a, b) / (b - a)
 
-def Symmetry_integral(f:Callable[[float],float],
-                      points:tuple[int,int])->float:
+
+def Symmetry_integral(f: Callable[[float], float], points: tuple[int, int]) -> float:
     """_summary_
 
     Calculate the integral of a function over symmetry range of
@@ -129,13 +129,11 @@ def Symmetry_integral(f:Callable[[float],float],
         points (tuple[int,int]): tuples of x-values defining the range
 
     """
-    neg_x_points = {(-x,y) for x,y in [points]}
-    
-    x,y = points
-    if (-x,y) not in neg_x_points:
-        result = general_antiderivative(f,0,y)
+    neg_x_points = {(-x, y) for x, y in [points]}
+
+    x, y = points
+    if (-x, y) not in neg_x_points:
+        result = general_antiderivative(f, 0, y)
         return result
     else:
         return 0.0
-        
-        
