@@ -2,6 +2,7 @@
 
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/slowy07/Hela/main.svg)](https://results.pre-commit.ci/latest/github/slowy07/Hela/main)
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/slowy07/Hela/pythontest-linux.yml?style=flat-square&logo=python&logoColor=blue&label=Build%20(Linux))
+![codefactor grade](https://img.shields.io/codefactor/grade/github/slowy07/Hela?style=flat)
 <br/>
 
 Hela is curated packaged for math computational. it provides a number functions for performing mathematical calculations, such as
@@ -11,7 +12,7 @@ anyone who need to perform mathematical calculations with python.
 
 ## installation
 
-installation Hela by (with only support with python ``3.10``, ``3.11`` and ``3.12``)
+installation Hela by (with only support with python ``3.10``, ``3.11`` and ``3.12`` (for ``3.12`` for experimental))
 
 - clone the repository
 ```sh
