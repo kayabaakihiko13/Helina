@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Callable, Union
 
 import numpy as np
-from Hela.common.differential import Differential
+from Hela.common import differential
 
 
 def general_antiderivative(
@@ -78,13 +78,13 @@ def Usubstitution(
         f (Callable[[float], float]): First function u(x).
         g (Callable[[float], float]): Second function u(x).
         a (float): The lower limit of integration.
-        b (float): The upper limit of integration.
+        b (float): The upper limit of integrataaion.
 
     Returns:
         float: Result of the U-substitution calculation.
     """
     try:
-        g_derivative = Differential.derivative(g, a, b)
+        g_derivative = differential.derivative(g, a, b)
         f_g_derivative = lambda x: f(g(x)) * g_derivative
         u_integral = general_antiderivative(f_g_derivative, a, b)
         return u_integral

@@ -3,7 +3,6 @@ import math
 import cmath
 from typing import Union, Optional, Callable, Any, SupportsFloat
 
-
 INF = 1e300 * 1e300
 NINF = -INF
 NAN = INF - INF
@@ -1168,3 +1167,125 @@ def zeta(s):
         return _polyval(_zeta_1, s) / (s - 1)
     z = _polyval(_zeta_P, s) / _polyval(_zeta_Q, s)
     return 1.0 + 2.0 ** (-s) + 3.0 ** (-s) + 4.0 ** (-s) * z
+
+
+def gcd(a: int, b: int) -> Union[int, None]:
+    """
+    euclid's lemma: d divide a and b, if and only if d divides a-b and b-b
+    euclid's algorithm
+
+    Args:
+        a (int): first number
+        b (int): second number
+
+    Returns:
+        (int): the greatest common divisor of a and b
+
+    Raises:
+        ValueError: if either a or b is not an integer
+
+    Example:
+    >>> gcd(121, 11)
+    11
+    """
+    if isinstance(a, int) and isinstance(b, int):
+        try:
+            if a < b:
+                a, b = b, a
+
+            while a % b != 0:
+                a, b = b, a % b
+            return b
+        except ZeroDivisionError:
+            print("cannot division by zero")
+    else:
+        raise TypeError("parameter a or b must be integer")
+    return None
+
+
+def lcm(a: int, b: int) -> Union[int, None]:
+    """
+    calculate the least common multiple of two number
+
+    Args:
+        a (int): first number
+        b (int): second number
+
+    Return:
+        (int): the least common multiple of a and b
+
+    Raises:
+        ValueError: if either a or b is not an integer
+    """
+    if isinstance(a, int) and isinstance(b, int):
+        try:
+            gcd_value = gcd(a, b)
+            if gcd_value is not None:
+                lcm_value = (a * b) // gcd_value
+                return lcm_value
+        except ZeroDivisionError:
+            print("cannot division by zero")
+    else:
+        raise ValueError("parameter must be an integer")
+    return None
+
+
+def mod_division(
+    a: Union[int, float], b: Union[int, float], n: Union[int, float], precision: int = 0
+) -> Union[int, None]:
+    """
+    modular division
+
+    efficient divide b by a mod n
+
+    GCD (greates common divisor) or HCF (highest common factor)
+
+    given three integers a, b, and n, such that gcd(a, n)=1 and n > 1, the function
+    should return an integer x such that 0 <= x <= n - 1 and b /a = x(modn)
+
+    theorem:
+    a has multiplicate inverse module n iff gcd(a, n)=1
+
+    Args:
+        a (int or float): the divisor
+        b (int or float): the divided
+        n (int or float): the modulus
+
+    Returns:
+        int: the result of b divided by a modulo n
+
+    Raises:
+        ValueError; if n is not greater than 1 or if gcd(a, n) not equal 1
+
+    Example:
+    >>> mod_division(3, 5, 7)
+    1
+    """
+
+    def extended_euclid(a, b):
+        if b == 0:
+            return (1, 0)
+        (x, y) = extended_euclid(b, a % b)
+        k = a // b
+        return (y, x - k * y)
+
+    def invert_mod(a, b):
+        (b, x) = extended_euclid(a, n)
+        if b < 0:
+            b = (b % n + n) % n
+        return b
+
+    if (
+        not isinstance(a, (int, float))
+        and isinstance(b, (int, float))
+        and isinstance(n, (int, float))
+    ):
+        raise TypeError("parameter a, b and n must be integer or float")
+
+    try:
+        s = invert_mod(a, n)
+        x = (b * s) % n
+        return round(x, precision)
+    except ZeroDivisionError:
+        print("cannot divide by a zero")
+        return None

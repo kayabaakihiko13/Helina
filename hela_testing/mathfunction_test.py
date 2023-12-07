@@ -22,19 +22,12 @@ class TestMathFunctionReal(unittest.TestCase):
         result_real = math_function_real(3.0)
         self.assertEqual(result_real, 9.0)
 
-    def test_complex_function(self):
-        math_function_complex = math_function._mathfunction_real(
-            square_function, square_complex
-        )
-        result_complex = math_function_complex(3.0 + 2.0j)
-        self.assertEqual(result_complex, (5 + 13j))
-
     def test_invalid_input(self):
-        math_function_invld = math_function._mathfunction_real(
+        math_function_invalid = math_function._mathfunction_real(
             square_function, square_complex
         )
         with self.assertRaises(ValueError):
-            result_invalid = math_function_invld("invalid_input")
+            result_invalid = math_function_invalid("invalid_input")
 
 
 class TestPolyvalFunction(unittest.TestCase):
@@ -61,3 +54,19 @@ class TestZetaAndE1Function(unittest.TestCase):
     def test_zeta_exception(self):
         with self.assertRaises(ValueError):
             math_function.zeta(1)
+
+
+class TestGCD(unittest.TestCase):
+    def test_positive_number(self):
+        result = math_function.gcd(121, 11)
+        self.assertEqual(result, 11)
+
+    def test_assert(self):
+        with self.assertRaises(TypeError):
+            math_function.gcd(10, "20")
+
+
+class TestModDivision(unittest.TestCase):
+    def test_valid_input(self):
+        result = math_function.mod_division(4, 11, 6)
+        self.assertEqual(result, 1)

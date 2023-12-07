@@ -21,7 +21,12 @@ from hela_testing.distribution_test import (
 
 from hela_testing.differential_test import TestDifferential
 from hela_testing.antidifferential_test import TestAntriDifferential
-from hela_testing.mathfunction_test import TestMathFunctionReal, TestPolyvalFunction
+from hela_testing.mathfunction_test import (
+    TestMathFunctionReal,
+    TestPolyvalFunction,
+    TestGCD,
+    TestModDivision,
+)
 from hela_testing.nthroot_test import TestNthRootFunction
 from hela_testing.pi_function_test import TestPiFunction
 from hela_testing.gamma_function_test import TestGammaFunction
