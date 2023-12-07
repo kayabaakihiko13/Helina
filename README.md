@@ -30,11 +30,11 @@ you can check the simple usage of hela on [`example`](example).
 ### Differential derivative example
 
 ```py
-from Hela.common.differential import Differential
+from Hela.common import differential
 
 def (x: float) -> float:
     return x ** 2
 value_input: int = 3
-calculate_derivative: float = Differential.derivative(function, value_input)
+calculate_derivative: float = differential.derivative(function, value_input)
 print(f"result: {calculate_derivative:.3f}") # 6.000
 ```
