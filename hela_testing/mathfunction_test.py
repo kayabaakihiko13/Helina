@@ -70,3 +70,18 @@ class TestModDivision(unittest.TestCase):
     def test_valid_input(self):
         result = math_function.mod_division(4, 11, 6)
         self.assertEqual(result, 1)
+
+
+class TestLucasNumber(unittest.TestCase):
+    def test_lucas_number_zero(self):
+        self.assertEqual(math_function.lucas_number(0), 2)
+
+    def test_lucas_number_one(self):
+        self.assertEqual(math_function.lucas_number(1), 1)
+
+    def test_lucas_number_ten(self):
+        self.assertEqual(math_function.lucas_number(10), 123)
+
+    def negative_number(self):
+        with self.assertRaises(TypeError):
+            math_function(-1)

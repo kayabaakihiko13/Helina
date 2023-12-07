@@ -1289,3 +1289,32 @@ def mod_division(
     except ZeroDivisionError:
         print("cannot divide by a zero")
         return None
+
+
+def lucas_number(n_nth_number: int) -> int:
+    """
+    similiar fibonacci sequence, each lucas number is define sum of its two immediately
+    preceding terms, the first two lucase number are 2 and 1, and the subsequent terms are generated
+    by adding the previous two numbers
+    NOTE: the lucas sequence start with 2 and 1 followed by 3, 4, 7, 11, 18, 29, 47, 76, 123
+
+    Args:
+        n_nth_number(int): the nth number
+    Return:
+        (int): the nth lucase number
+
+    Example:
+    >>> lucas_number(20)
+    15127
+    """
+    # using recursive
+    if not isinstance(n_nth_number, int):
+        raise TypeError(
+            "nth number must be positive integer, got {}".format(type(n_nth_number))
+        )
+    if n_nth_number == 0:
+        return 2
+    if n_nth_number == 1:
+        return 1
+
+    return lucas_number(n_nth_number - 1) + lucas_number(n_nth_number - 2)
