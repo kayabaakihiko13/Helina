@@ -21,7 +21,7 @@ class TestAntriDifferential(unittest.TestCase):
         self.assertAlmostEqual(result, 9.28, places=1)
 
     def testing_powerRule_antidifferential(self):
-        result = antidifferential.PowerRule_antiderivative(n=3, x=2)
+        result = antidifferential.PowerRule_antiderivative(3, 2)
         self.assertEqual(result, 4.0)
 
     def testing_subtitution(self):

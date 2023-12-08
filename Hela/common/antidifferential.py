@@ -36,7 +36,7 @@ def general_antiderivative(
             for i in range(num_interval):
                 x_i = a + i * delta_x
                 result += f(x_i) * delta_x
-            return result
+            return float(result)
 
         if method == "trapezoidal":
             result = 0.5 * (f(a) + f(b))
@@ -70,7 +70,18 @@ def PowerRule_antiderivative(n: int, x: float) -> float:
         float: The antiderivative result of the Power Rule.
     """
     try:
-        return np.power(x, n + 1) / float(n + 1)
+        if not isinstance(n, (float, int)):
+            raise TypeError(
+                f"exponent power function (n) must be integer or float, got {type(n)}"
+            )
+        if not isinstance(x, (float, int)):
+            raise TypeError(
+                f"value to calculate antiderivative (x) must be float or integer, got {type(n)}"
+            )
+        if n < 1 or x < 1:
+            raise ValueError("value of parameter must >= 1")
+        else:
+            return np.power(x, n + 1) / float(n + 1)
 
     except Exception as powerrule_antidifferential:
         raise ValueError(f"Error: {powerrule_antidifferential}")

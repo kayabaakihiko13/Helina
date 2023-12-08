@@ -37,3 +37,7 @@ if __name__ == "__main__":
     # lcm
     lcm_result = mathfunc.lcm(12, 20)
     print(f"result of lcm is : {lcm_result}")
+
+    # lucas number
+    lucas_num = mathfunc.lucas_number(20)
+    print(f"result of lucas number is: {lucas_num}")

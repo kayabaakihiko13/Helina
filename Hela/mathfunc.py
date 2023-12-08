@@ -959,6 +959,7 @@ def erfc(x):
     return 1.0 - _erf_taylor(x)
 
 
+# FIXME: while 1
 def ei_asymp(z: float, _e1: Optional[bool] = False) -> complex:
     """
     compute the exponential integral using asymptotic expansion
@@ -1002,6 +1003,7 @@ def ei_asymp(z: float, _e1: Optional[bool] = False) -> complex:
     return v
 
 
+# FIXME: while 1
 def ei_taylor(z: Union[complex, float], _e1: Optional[bool] = False) -> complex:
     """
     compute the exponential integral using taylor series

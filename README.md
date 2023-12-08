@@ -5,14 +5,12 @@
 ![codefactor grade](https://img.shields.io/codefactor/grade/github/slowy07/Hela?style=flat)
 <br/>
 
-Hela is curated packaged for math computational. it provides a number functions for performing mathematical calculations, such as
-factorial radians, mean, etc. the function in hela are carefully tested to ensure accuracy and correctness. Hela is great module for who
-anyone who need to perform mathematical calculations with python.
+Hela is curated packaged for math computational. it provides a number functions for performing mathematical calculations. The function in hela are carefully tested to ensure accuracy and correctness. Hela is great module for who anyone need to perform mathematical calculations with python.
 
 
 ## installation
 
-installation Hela by (with only support with python ``3.10``, ``3.11`` and ``3.12`` (for ``3.12`` for experimental))
+installation Hela by (only support with python ``3.10``, ``3.11`` and ``3.12`` (for ``3.12`` for experimental))
 
 - clone the repository
 ```sh
@@ -39,3 +37,7 @@ value_input: int = 3
 calculate_derivative: float = differential.derivative(function, value_input)
 print(f"result: {calculate_derivative:.3f}") # 6.000
 ```
+
+### Contributing
+
+Contributing are welcome, before that you can read the [CONTRIBUTING](CONTRIBUTING.md) before submit pull request.

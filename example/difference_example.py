@@ -1,7 +1,19 @@
 from __future__ import annotations
-from Hela.common import differential
+from Hela.common import differential, antidifferential
+import numpy as np
 
 if __name__ == "__main__":
+    # calculate the general anti derivative
+    print("calculate the gneeral antiderivative of a number wich:")
+    print("- function to intergrate is lambda x: x ** 2")
+    print("- lower limit of intergration is 3.0")
+    print("- and upper limit of intergration is 2.0")
+    print("- and the interval for calculation, (default is 4)")
+    print("- use `trapezodial` for the method (optional: `riemann`)")
+    print(
+        f"the result are : {antidifferential.general_antiderivative(lambda x: x ** 2, 3.0, 4, method='trapezoidal')}\n"
+    )
+
     # this for Defivative example
     print("Differential Derivative")
 
@@ -41,4 +53,10 @@ if __name__ == "__main__":
         return x
 
     result = differential.quotient_derivate(u_func, v_func, 2)
-    print(f"Result of Derivative Quotient:{result}")
+    print(f"Result of Derivative Quotient:{result}\n")
+
+    # power rule antiderivative
+    print("calculate the antiderivative of x ^ n using power rule")
+    print("with exponent of the power function is 3")
+    print("and the value to calculate the antiderivative is 2")
+    print(f"result is : {antidifferential.PowerRule_antiderivative(3, 2)}")

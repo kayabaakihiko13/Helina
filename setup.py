@@ -27,18 +27,13 @@ setup(
     packages=["Hela"],
     python_requires=">=3.10",
     classifiers=[
-        " Intended Audience :: Developers",
+        "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
         "Operating System :: OS Independent",
     ],
-    entry_points={
-        "console_scripts": [
-            "Hela=Hela.cli:main",
-        ],
-    },
     install_requires=install_require,
     license="MIT License",
     project_urls={
