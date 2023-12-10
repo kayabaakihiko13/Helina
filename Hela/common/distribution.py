@@ -1,6 +1,6 @@
 from __future__ import annotations
 import math
-import random
+from secrets import SystemRandom
 import numpy as np
 
 
@@ -114,10 +114,11 @@ class ContinousDistribution:
 
         Example
         >>> sample = ContinuousDistribution.generate_random_sample(2.0, 5.0)
-        >>> print(f"Generated random sample: {sample:.6f}")
+        >>> print(f"Generated random sample: {sample:.6f}") # will be generated random
         Generated random sample: 3.491482
         """
-        return random.uniform(a, b)
+        random_gen = SystemRandom()
+        return random_gen.uniform(a, b)
 
 
 class BetaDistribution:

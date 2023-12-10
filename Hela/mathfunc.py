@@ -1,7 +1,7 @@
 import operator
 import math
 import cmath
-from typing import Union, Optional, Callable, Any, SupportsFloat
+from typing import Union, Optional, Callable, Any
 
 INF = 1e300 * 1e300
 NINF = -INF
@@ -571,6 +571,7 @@ def cotpi(x: float) -> complex:
         raise
 
 
+math_log = math.log
 try:
     math.log(-2.0)
 except (ValueError, TypeError):
@@ -645,7 +646,7 @@ def _gamma_complex(x: float) -> float | complex:
         return 2.506628274631000502417 * t ** (x + 0.5) * cmath.exp(-t) * r
 
 
-pow = _mathfunction_n(operator.pow, lambda x, y: complex(x) ** y)
+power = _mathfunction_n(operator.pow, lambda x, y: complex(x) ** y)
 gamma = _mathfunction_real(_gamma_real, _gamma_complex)
 log = _mathfunction_n(math_log, cmath.log)
 sqrt = _mathfunction(math_sqrt, cmath.sqrt)

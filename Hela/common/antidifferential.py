@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Callable, Union
+from typing import Callable
 
 import numpy as np
 from Hela.common import differential

@@ -45,9 +45,9 @@ def adding_two_numbers(a: int, b: int) -> int:
     Args:
         a (int): first number
         b (int): second number
-    
+
     Return:
-        (int): result adding first and two numbers 
+        (int): result adding first and two numbers
     """
     return a + b
 ```
