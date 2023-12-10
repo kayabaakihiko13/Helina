@@ -986,7 +986,7 @@ def ei_asymp(z: float, _e1: Optional[bool] = False) -> complex:
         k += 1
     v = s * exp(z) / z
     if _e1:
-        if type(z) is complex:
+        if isinstance(z, complex):
             zreal = z.real
             zimag = z.imag
         else:
@@ -995,7 +995,7 @@ def ei_asymp(z: float, _e1: Optional[bool] = False) -> complex:
         if zimag == 0.0 and zreal > 0.0:
             v += pi * 1j
     else:
-        if type(z) is complex:
+        if isinstance(z, complex):
             if z.imag > 0:
                 v += pi * 1j
             if z.imag < 0:
@@ -1032,7 +1032,7 @@ def ei_taylor(z: Union[complex, float], _e1: Optional[bool] = False) -> complex:
     if _e1:
         s += log(-z)
     else:
-        if type(z) is float or z.imag == 0.0:
+        if isinstance(z, float) or z.imag == 0.0:
             s += math_log(abs(z))
         else:
             s += cmath.log(z)
@@ -1078,7 +1078,7 @@ def ei(z, _e1=False):
     C = (zref - z) * 0.5
     D = (zref + z) * 0.5
     s = 0.0
-    if type(z) is complex:
+    if isinstance(z, complex):
         _exp = cmath.exp
     else:
         _exp = cmath.exp
@@ -1105,7 +1105,7 @@ def e1(z):
     (0.5741865820328397-0.17605984310937222j)
     """
     typez = type(z)
-    if type(z) not in (float, complex):
+    if not isinstance(z, (float, complex)):
         try:
             z = float(z)
             typez = float
