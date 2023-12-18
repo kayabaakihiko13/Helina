@@ -149,12 +149,17 @@ def Symmetry_integral(f: Callable[[float], float], points: tuple[int, int]) -> f
     else:
         return 0.0
 
-def partialIntegral(f:Callable[[float],float],g:Callable[[float],float],
-                    a:int|float,b:int|float)-> float:
+
+def partialIntegral(
+    f: Callable[[float], float],
+    g: Callable[[float], float],
+    a: int | float,
+    b: int | float,
+) -> float:
     """
     Calculate the integral of a partial Integral
     Args:
-        f (Callable[[float],float]): f value 
+        f (Callable[[float],float]): f value
         g (Callable[[float],float]): g value
         a (int | float): lower interval
         b (int | float): high interval
