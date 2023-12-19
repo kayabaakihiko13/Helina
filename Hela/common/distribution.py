@@ -4,6 +4,7 @@ import numpy as np
 from typing import Union
 from secrets import SystemRandom
 
+
 class NormalDistribution:
     @staticmethod
     def normal_pdf(x: float, mean: float, sigma: float) -> float:
@@ -179,9 +180,9 @@ class BetaDistribution:
             sum(BetaDistribution.beta_pdf(t, alpha, beta) for t in frange(0, x, 0.001))
             * 0.001
         )
-    
+
     @staticmethod
-    def beta_random(alpha:float,beta:float)-> float:
+    def beta_random(alpha: float, beta: float) -> float:
         """
         Generate a random sample from the beta distribution
         Args:
@@ -191,7 +192,8 @@ class BetaDistribution:
             float: the result random distribution
         """
         random = SystemRandom()
-        return random.betavariate(alpha,beta)
+        return random.betavariate(alpha, beta)
+
 
 class ExponetialDistribution:
     @staticmethod
@@ -502,21 +504,22 @@ class StudentDistribution:
         Returns:
             np.ndarray: Result from the calculation.
         """
-        if isinstance(vector,float):
+        if isinstance(vector, float):
             t = vector
         else:
             t = vector - np.mean(vector)
             t /= np.std(vector) / np.sqrt(vector.shape[0])
 
-        result = (
-            math.gamma((degree + 1) / 2)
-            / (math.gamma(degree / 2) * np.sqrt(degree * np.pi))
+        result = math.gamma((degree + 1) / 2) / (
+            math.gamma(degree / 2) * np.sqrt(degree * np.pi)
         )
         result *= (t**2 / degree + 1) ** -((degree + 1) / 2)
         return result
 
     @staticmethod
-    def t_distribution_cdf(value: Union[np.array, int, float], degree: int = 10, steps: int = 1000) -> float:
+    def t_distribution_cdf(
+        value: Union[np.array, int, float], degree: int = 10, steps: int = 1000
+    ) -> float:
         """
         Calculate the value of continuous from the Student distribution using numerical integration.
 
@@ -529,7 +532,9 @@ class StudentDistribution:
             float: Result of the t distribution using numerical integration.
         """
         if isinstance(value, (list, np.ndarray)):
-            raise ValueError("Input 'value' should be a single numeric value, not a list or array.")
+            raise ValueError(
+                "Input 'value' should be a single numeric value, not a list or array."
+            )
 
         delta_x = value / steps
         result_cdf = 0
