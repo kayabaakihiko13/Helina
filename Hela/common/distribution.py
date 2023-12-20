@@ -1,7 +1,8 @@
 from __future__ import annotations
 import math
-from secrets import SystemRandom
 import numpy as np
+from typing import Union
+from secrets import SystemRandom
 
 
 class NormalDistribution:
@@ -179,6 +180,19 @@ class BetaDistribution:
             sum(BetaDistribution.beta_pdf(t, alpha, beta) for t in frange(0, x, 0.001))
             * 0.001
         )
+
+    @staticmethod
+    def beta_random(alpha: float, beta: float) -> float:
+        """
+        Generate a random sample from the beta distribution
+        Args:
+            alpha (float): size value alpha of the beta distribution
+            beta (float):  size value beta of the beta distribution
+        Returns:
+            float: the result random distribution
+        """
+        random = SystemRandom()
+        return random.betavariate(alpha, beta)
 
 
 class ExponetialDistribution:
@@ -470,38 +484,79 @@ class Poisson:
         return result
 
 
-class student_distribution:
+class StudentDistribution:
     """
-    Studentn Distribution (familiar with name t-distribution)
-    is a continous probabilty distribution that  generalizes
+    Student Distribution (also known as t-distribution)
+    is a continuous probability distribution that generalizes
     the standard normal distribution. Like the latter,
     it is symmetric around zero and bell-shaped.
     """
 
     @staticmethod
-    def t_distribution_pdf(vector: np.ndarray, degree: int = 10) -> float:
+    def t_distribution_pdf(vector: np.ndarray, degree: int = 10) -> np.ndarray:
         """
-        Calculate with Student Distribution with pdf
+        Calculate Student Distribution's probability density function (PDF).
+
         Args:
-        vector (np.ndarray) : this paramater represents input values
-        degree (int,optional) : value for represents particular node
+            vector (np.ndarray): Input values.
+            degree (int, optional): Degree of freedom. Defaults to 10.
 
         Returns:
-            float: result from that
-        Example:
-        >>> from Hela.common.distribution import student_distribution
-        >>> import numpy as np
-        >>> a = np.array([1,2,3,4])
-        >>> student_distribution.t_distribution_pdf(a,10)
-        array([0.61917584, 8.00552478, 8.00552478, 0.61917584])
+            np.ndarray: Result from the calculation.
         """
-        t = vector - np.mean(vector)
-        t /= np.std(vector) / np.sqrt(vector.shape[0])
+        if isinstance(vector, float):
+            t = vector
+        else:
+            t = vector - np.mean(vector)
+            t /= np.std(vector) / np.sqrt(vector.shape[0])
 
-        result = (
-            math.gamma((degree + 1) / 2)
-            / math.gamma(degree / 2)
-            * np.sqrt(degree * np.pi)
+        result = math.gamma((degree + 1) / 2) / (
+            math.gamma(degree / 2) * np.sqrt(degree * np.pi)
         )
         result *= (t**2 / degree + 1) ** -((degree + 1) / 2)
         return result
+
+    @staticmethod
+    def t_distribution_cdf(
+        value: Union[np.array, int, float], degree: int = 10, steps: int = 1000
+    ) -> float:
+        """
+        Calculate the value of continuous from the Student distribution using numerical integration.
+
+        Args:
+            value (Union[np.array, int, float]): Input value(s).
+            degree (int, optional): Size of degree freedom for the Student distribution. Defaults to 10.
+            steps (int, optional): Step value. Defaults to 1000.
+
+        Returns:
+            float: Result of the t distribution using numerical integration.
+        """
+        if isinstance(value, (list, np.ndarray)):
+            raise ValueError(
+                "Input 'value' should be a single numeric value, not a list or array."
+            )
+
+        delta_x = value / steps
+        result_cdf = 0
+
+        for i in range(1, steps + 1):
+            t_i = delta_x * i
+            result_cdf += StudentDistribution.t_distribution_pdf(t_i, degree) * delta_x
+
+        return result_cdf
+
+    @staticmethod
+    def t_distribution_random(degree: float) -> float:
+        """
+        Generate a random t distribution value using the Monte Carlo method.
+
+        Args:
+            degree (float): Size of the degree of freedom.
+
+        Returns:
+            float: Result of the random generator.
+        """
+        random = SystemRandom()
+        u = random.random()
+        v = random.gauss(0, 1)
+        return v / math.sqrt(u / degree)

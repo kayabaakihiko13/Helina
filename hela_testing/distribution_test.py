@@ -10,7 +10,7 @@ from Hela.common.distribution import (
     ChiSquareDistribution,
     Poisson,
     HypergeometricDistribution,
-    student_distribution,
+    StudentDistribution,
 )
 
 
@@ -122,6 +122,13 @@ class TestPoisson(unittest.TestCase):
 class TestStudentDistribution(unittest.TestCase):
     def test_T_Distribution_pdf(self):
         vector = np.array([1, 2, 3, 4])
-        pdf = student_distribution.t_distribution_pdf(vector)
+        pdf = StudentDistribution.t_distribution_pdf(vector)
         expected_result = np.array([0.61917584, 8.00552478, 8.00552478, 0.61917584])
         self.assertAlmostEqual(pdf.any(), expected_result.any())
+
+    def test_t_distribution_cdf(self):
+        value = 1.5
+        degree = 10
+        expected_result = 0.41755005689870756
+        calculated_result = StudentDistribution.t_distribution_cdf(value, degree)
+        self.assertAlmostEqual(calculated_result, expected_result, places=6)
