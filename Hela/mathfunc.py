@@ -1268,12 +1268,12 @@ def mod_division(
     def extended_euclid(a, b):
         if b == 0:
             return (1, 0)
-        (x, y) = extended_euclid(b, a % b)
+        x, y = extended_euclid(b, a % b)
         k = a // b
         return (y, x - k * y)
 
     def invert_mod(a, b):
-        (b, x) = extended_euclid(a, n)
+        b, x = extended_euclid(a, n)
         if b < 0:
             b = (b % n + n) % n
         return b
